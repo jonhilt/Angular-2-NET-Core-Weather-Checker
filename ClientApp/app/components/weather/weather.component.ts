@@ -8,8 +8,11 @@ import { Http } from '@angular/http';
 export class WeatherComponent {
     public weather: Weather;
 
-    constructor(http: Http) {
-        http.get('/api/weather/city/London').subscribe(result => {
+    constructor(private http: Http) {
+    }
+
+    public getWeather(chosenCity: string) {
+        this.http.get('/api/weather/city/' + chosenCity).subscribe(result => {
             this.weather = result.json();
         });
     }

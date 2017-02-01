@@ -1,5 +1,9 @@
 ﻿<h1>Weather check</h1>
 
+<label for="city">City</label>
+<input type="text" id="city" [(ngModel)]="chosenCity" />
+<input type="button" value="Get Weather" (click)="getWeather(chosenCity)" />
+
 <div *ngIf="weather">
     <h3>Weather for {{weather.city}}</h3>
 
