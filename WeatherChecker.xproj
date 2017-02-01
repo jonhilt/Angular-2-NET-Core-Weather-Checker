@@ -8,7 +8,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>c433c69f-6d84-4e44-93d9-82de9ab036ad</ProjectGuid>
-    <RootNamespace>WeatherStation</RootNamespace>
+    <RootNamespace>WeatherChecker</RootNamespace>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
