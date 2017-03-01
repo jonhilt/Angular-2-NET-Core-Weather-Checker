@@ -11,11 +11,15 @@ Installation Instructions
 
 To get this working you'll need to open up a command prompt (in the directory where you downloaded the source) and run the following command...
 
-```webpack --config webpack.config.vendor.js```
+```
+webpack --config webpack.config.vendor.js
+```
 
 and also this one...
 
-```webpack```
+```
+webpack
+```
 
 With that you should see files in the wwwroot/dist folder.
 
