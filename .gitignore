@@ -244,3 +244,8 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+**/ClientApp/**/*.js
+**/ClientApp/**/*.js.map
+/ClientApp/boot-server.js.map
