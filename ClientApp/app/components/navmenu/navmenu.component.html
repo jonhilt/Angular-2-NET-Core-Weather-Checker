@@ -32,6 +32,11 @@
                         <span class='glyphicon glyphicon-user'></span> Hello
                     </a>
                 </li>
+                <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/weather']">
+                        <span class='glyphicon glyphicon-cloud'></span> City Weather
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

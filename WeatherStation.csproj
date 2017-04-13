@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>Angular-2-NET-Core-Weather-Checker</AssemblyName>
+    <AssemblyName>WeatherStation</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Angular-2-NET-Core-Weather-Checker</PackageId>
     <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
