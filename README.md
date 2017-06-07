@@ -30,7 +30,7 @@ For more details, see [Steve Sanderson's original blog post](http://blog.stevens
 Secrets
 --------
 
-This example app relies on a number of "secrets": sensitive information such as the client secret for authenticating via Google and the api Key for retrieving weather data from the OpenWeather Api.
+This example app relies on a number of "secrets"; sensitive information such as the client secret for authenticating via Google and the api Key for retrieving weather data from the OpenWeather Api.
 
 Rather than store these values in plain text in the source code, we use the .NET Core User Secrets tool.
 
@@ -57,4 +57,4 @@ C:\Users\<YourUserName>\AppData\Roaming\Microsoft\UserSecrets\efebb820-2ce5-467e
 Secure Version
 --------------
 
-If you want to see how to secure this app using OpenID Connect, check out the [secure branch](https://github.com/jonhilt/Angular-2-NET-Core-Weather-Checker/secure).
+If you want to see how to secure this app using OpenID Connect, check out the [secure branch](https://github.com/jonhilt/Angular-2-NET-Core-Weather-Checker/tree/secure).
