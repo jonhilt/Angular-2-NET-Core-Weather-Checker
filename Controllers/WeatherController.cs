@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
-namespace WeatherChecker.Controllers
+namespace WeatherStation.Controllers
 {
     [Route("api/[controller]")]
     public class WeatherController : Controller
     {
+        private readonly IOptions<AppOptions> _options;
+
+        public WeatherController(IOptions<AppOptions> options)
+        {
+            _options = options;
+        }
+        
         [HttpGet("[action]/{city}")]
         public async Task<IActionResult> City(string city)
         {
@@ -19,7 +27,7 @@ namespace WeatherChecker.Controllers
                 try
                 {
                     client.BaseAddress = new Uri("http://api.openweathermap.org");
-                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=f6c810b72d69b9224b8ddde39e19f6f9&units=metric");
+                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid={_options.Value.OpenWeatherApiKey}&units=metric");
                     response.EnsureSuccessStatusCode();
 
                     var stringResult = await response.Content.ReadAsStringAsync();
