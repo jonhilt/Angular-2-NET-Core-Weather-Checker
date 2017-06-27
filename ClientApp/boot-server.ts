@@ -1,34 +1,36 @@
-import 'angular2-universal-polyfills';
+import 'reflect-metadata';
 import 'zone.js';
-import { enableProdMode } from '@angular/core';
-import { platformNodeDynamic } from 'angular2-universal';
-import { AppModule } from './app/app.module';
+import 'rxjs/add/operator/first';
+import { enableProdMode, ApplicationRef, NgZone, ValueProvider } from '@angular/core';
+import { platformDynamicServer, PlatformState, INITIAL_CONFIG } from '@angular/platform-server';
+import { createServerRenderer, RenderResult } from 'aspnet-prerendering';
+import { AppModule } from './app/app.module.server';
 
 enableProdMode();
-const platform = platformNodeDynamic();
 
-export default function (params: any) : Promise<{ html: string, globals?: any }> {
-    return new Promise((resolve, reject) => {
-        const requestZone = Zone.current.fork({
-            name: 'angular-universal request',
-            properties: {
-                baseUrl: '/',
-                requestUrl: params.url,
-                originUrl: params.origin,
-                preboot: false,
-                // TODO: Render just the <app> component instead of wrapping it inside an extra HTML document
-                // Waiting on https://github.com/angular/universal/issues/347
-                document: '<!DOCTYPE html><html><head></head><body><app></app></body></html>'
-            },
-            onHandleError: (parentZone, currentZone, targetZone, error) => {
-                // If any error occurs while rendering the module, reject the whole operation
-                reject(error);
-                return true;
-            }
+export default createServerRenderer(params => { 
+    const providers = [
+        { provide: INITIAL_CONFIG, useValue: { document: '<app></app>', url: params.url } },
+        { provide: 'ORIGIN_URL', useValue: params.origin }
+    ];
+
+    return platformDynamicServer(providers).bootstrapModule(AppModule).then(moduleRef => {
+        const appRef = moduleRef.injector.get(ApplicationRef);
+        const state = moduleRef.injector.get(PlatformState);
+        const zone = moduleRef.injector.get(NgZone);
+
+        return new Promise<RenderResult>((resolve, reject) => {
+            zone.onError.subscribe(errorInfo => reject(errorInfo));
+            appRef.isStable.first(isStable => isStable).subscribe(() => {
+                // Because 'onStable' fires before 'onError', we have to delay slightly before
+                // completing the request in case there's an error to report
+                setImmediate(() => {
+                    resolve({
+                        html: state.renderToString()
+                    });
+                    moduleRef.destroy();
+                });
+            });
         });
-
-        return requestZone.run<Promise<string>>(() => platform.serializeModule(AppModule)).then(html => {
-            resolve({ html: html });
-        }, reject);
     });
-}
+});

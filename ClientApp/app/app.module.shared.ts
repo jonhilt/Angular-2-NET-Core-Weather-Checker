@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { UniversalModule } from 'angular2-universal';
 
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -11,8 +10,8 @@ import { CounterComponent } from './components/counter/counter.component';
 import { HelloWorldComponent } from './components/helloworld/helloworld.component';
 import { WeatherComponent } from './components/weather/weather.component';
 
-@NgModule({
-    bootstrap: [ AppComponent ],
+export const sharedConfig: NgModule = {
+    bootstrap: [AppComponent],
     declarations: [
         AppComponent,
         NavMenuComponent,
@@ -23,7 +22,6 @@ import { WeatherComponent } from './components/weather/weather.component';
         WeatherComponent
     ],
     imports: [
-        UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,6 +33,4 @@ import { WeatherComponent } from './components/weather/weather.component';
             { path: '**', redirectTo: 'home' }
         ])
     ]
-})
-export class AppModule {
-}
+};
