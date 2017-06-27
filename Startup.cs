@@ -22,7 +22,12 @@ namespace WeatherStation
             {
                 builder.AddUserSecrets<Startup>();
             }
-            
+            else
+            {
+                var config = builder.Build();
+                builder.AddAzureKeyVault("https://weatherchecker.vault.azure.net/", config["ClientId"], config["ClientSecret"]);
+            }
+
             Configuration = builder.Build();
         }
 
